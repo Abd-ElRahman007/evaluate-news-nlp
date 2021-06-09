@@ -16,21 +16,15 @@ function handleSubmit(event) {
                 const fullLink = await link.json();
                 console.log(fullLink);
                 let textInfo = '';
-                (() => {
-                    for (let i = 0; i < fullLink.sentence_list.length; i++) {
-                        let text = '';
-                        text = fullLink.sentence_list[i].text;
-                        textInfo = textInfo + text;
-                    }
-                })();
-                const container = document.createDocumentFragment();
-                const bodyInfo = document.createElement('div').innerHTML = `agreement:${fullLink.agreement},<br>
+                // const container = document.createDocumentFragment();
+                const bodyInfo = document.getElementById('results').innerHTML = `agreement:${fullLink.agreement},<br>
             model:${fullLink.model},<br>
             confidence:${fullLink.confidence},<br>
             irony;${fullLink.irony},<br>
             text:${textInfo}`;
-                container.appendChild(bodyInfo);
-                document.getElementById('results').appendChild(container);
+                // const body = document.getElementById('results');
+                // container.appendChild(bodyInfo);
+                // body.appendChild(container);
                 return fullLink;
             } catch (error) {
                 console.log('error', error);

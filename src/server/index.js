@@ -27,8 +27,8 @@ const application_key = process.env.API_KEY;
 
 
 app.get('/', function (req, res) {
-    //res.sendFile(path.resolve('dist/index.html'));
-    res.sendFile(path.resolve('src/client/views/index.html'));
+    res.sendFile(path.resolve('dist/index.html'));
+    //res.sendFile(path.resolve('src/client/views/index.html'));
 });
 
 // designates what port the app will listen to for incoming requests
