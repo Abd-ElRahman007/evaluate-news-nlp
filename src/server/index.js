@@ -1,9 +1,23 @@
 const dotenv = require('dotenv');
 dotenv.config();
 var path = require('path');
+
+//* declare express
 const express = require('express');
 
+//* start the instance of the app
 const app = express();
+
+//* require bodyParser
+const bodyParser = require('body-parser');
+
+//* set bodyParser
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+//* require cors
+const cors = require('cors');
+app.use(cors);
 
 app.use(express.static('dist'));
 
