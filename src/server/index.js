@@ -7,6 +7,7 @@ const express = require('express');
 
 //* start the instance of the app
 const app = express();
+app.use(express.static('dist'));
 
 //* require bodyParser
 const bodyParser = require('body-parser');
@@ -19,18 +20,14 @@ app.use(bodyParser.json());
 const cors = require('cors');
 app.use(cors);
 
-app.use(express.static('dist'));
 
 console.log(__dirname);
 
-const Data = {
-    application_key: process.env.API_KEY,
-    lang: "en",
-};
+const application_key = process.env.API_KEY;
 
 
 app.get('/', function (req, res) {
-    // res.sendFile('dist/index.html')
+    //res.sendFile(path.resolve('dist/index.html'));
     res.sendFile(path.resolve('src/client/views/index.html'));
 });
 
@@ -40,6 +37,6 @@ app.listen(8000, function () {
 });
 
 app.get('/api_key', function (req, res) {
-    res.send(Data);
+    res.send(application_key);
 });
 

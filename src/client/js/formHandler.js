@@ -1,10 +1,15 @@
+const baseUrl = 'https://api.meaningcloud.com/sentiment-2.1?key=';
+const application_key = process.env.API_KEY;
+
 function handleSubmit(event) {
     event.preventDefault();
-    const baseUrl = 'https://api.meaningcloud.com/sentiment-2.1?key=';
+
 
     // check what text was put into the form field
     let formText = document.getElementById('name').value;
+    console.log(Client.checkForName(formText));
     if (Client.checkForName(formText)) {
+        console.log(Client.checkForName(formText));
         const formData = async (text_link) => {
             const link = await fetch(text_link);
             try {
@@ -32,22 +37,20 @@ function handleSubmit(event) {
             }
         };
         fetch('/api_key')
-            .then(res => res.json())
-            .then(function (res) {
-                const url = formText;
-                const theLink = `${baseUrl}${res.application_key}&of=json&url=${url}&lang=${res.lang}`;
-                console.log(theLink);
-                formData(baseUrl, res, url);
-            });
+            .then(res => res.json());
+        const theLink = `${baseUrl}${application_key}&url=${formText}&lang=en`;
+        console.log(theLink);
+        formData(theLink);
     }
-    // if (!formText == '') {s
-    //     alert('the link is invalid, please check the syntax and try again. ');
-    //     document.getElementById('results').innerHTML = '';
-    // }
-    // else {
-    //     alert('the input is empty');
-    //     document.getElementById('results').innerHTML = '';
-    // }
+    else if (!formText == '') {
+
+        alert('the link is invalid, please check the syntax and try again. ');
+        document.getElementById('results').innerHTML = '';
+    }
+    else {
+        alert('the input is empty');
+        document.getElementById('results').innerHTML = '';
+    }
 
 }
 
