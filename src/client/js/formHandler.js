@@ -1,5 +1,4 @@
 const baseUrl = 'https://api.meaningcloud.com/sentiment-2.1?key=';
-const application_key = process.env.API_KEY;
 
 function handleSubmit(event) {
     event.preventDefault();
@@ -27,7 +26,7 @@ function handleSubmit(event) {
                 console.log('error', error);
             }
         };
-        const theLink = `${baseUrl}${application_key}&url=${formText}&lang=en`;
+        const theLink = `${baseUrl}64b6a577f1639c23190b2cdb643bb70f&url=${formText}&lang=en`;
         console.log(theLink);
         formData(theLink);
     }

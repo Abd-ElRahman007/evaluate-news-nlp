@@ -23,12 +23,12 @@ app.use(cors);
 
 console.log(__dirname);
 
-const application_key = process.env.API_KEY;
+const key = { application_key: process.env.API_KEY };
 
 
 app.get('/', function (req, res) {
-    res.sendFile(path.resolve('dist/index.html'));
-    //res.sendFile(path.resolve('src/client/views/index.html'));
+    //res.sendFile(path.resolve('dist/index.html'));
+    res.sendFile(path.resolve('src/client/views/index.html'));
 });
 
 // designates what port the app will listen to for incoming requests
@@ -37,6 +37,6 @@ app.listen(8000, function () {
 });
 
 app.get('/api_key', function (req, res) {
-    res.send(application_key);
+    res.send(key);
 });
 
