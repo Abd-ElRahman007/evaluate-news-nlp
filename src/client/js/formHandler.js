@@ -7,9 +7,7 @@ function handleSubmit(event) {
 
     // check what text was put into the form field
     let formText = document.getElementById('name').value;
-    console.log(Client.checkForName(formText));
     if (Client.checkForName(formText)) {
-        console.log(Client.checkForName(formText));
         const formData = async (text_link) => {
             const link = await fetch(text_link);
             try {
@@ -20,8 +18,7 @@ function handleSubmit(event) {
                 const bodyInfo = document.getElementById('results').innerHTML = `agreement:${fullLink.agreement},<br>
             model:${fullLink.model},<br>
             confidence:${fullLink.confidence},<br>
-            irony;${fullLink.irony},<br>
-            text:${textInfo}`;
+            irony;${fullLink.irony}`;
                 // const body = document.getElementById('results');
                 // container.appendChild(bodyInfo);
                 // body.appendChild(container);
@@ -30,13 +27,12 @@ function handleSubmit(event) {
                 console.log('error', error);
             }
         };
-        fetch('/api_key')
-            .then(res => res.json());
         const theLink = `${baseUrl}${application_key}&url=${formText}&lang=en`;
         console.log(theLink);
         formData(theLink);
     }
-    else if (!formText == '') {
+
+    else if (formText !== '') {
 
         alert('the link is invalid, please check the syntax and try again. ');
         document.getElementById('results').innerHTML = '';
