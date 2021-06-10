@@ -1,5 +1,3 @@
-const dotenv = require('dotenv');
-dotenv.config();
 var path = require('path');
 
 //* declare express
@@ -20,6 +18,9 @@ app.use(bodyParser.json());
 const cors = require('cors');
 app.use(cors);
 
+//* declare the dotenv.
+const dotenv = require('dotenv');
+dotenv.config();
 
 console.log(__dirname);
 
@@ -27,8 +28,8 @@ const key = { application_key: process.env.API_KEY };
 
 
 app.get('/', function (req, res) {
-    //res.sendFile(path.resolve('dist/index.html'));
-    res.sendFile(path.resolve('src/client/views/index.html'));
+    res.sendFile(path.resolve('dist/index.html'));
+    //res.sendFile(path.resolve('src/client/views/index.html'));
 });
 
 // designates what port the app will listen to for incoming requests
