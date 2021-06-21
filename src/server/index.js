@@ -14,13 +14,14 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+//* declare the dotenv.
+const dotenv = require('dotenv');
+dotenv.config();
+
 //* require cors
 const cors = require('cors');
 app.use(cors);
 
-//* declare the dotenv.
-const dotenv = require('dotenv');
-dotenv.config();
 
 console.log(__dirname);
 

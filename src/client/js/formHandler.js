@@ -24,8 +24,7 @@ function handleSubmit(event) {
                 ui.innerHTML = `agreement:${fullLink.agreement},<br>
                 model:${fullLink.model},<br>
                 confidence:${fullLink.confidence},<br>
-                irony:${fullLink.irony},<br>
-                text:${formText}`;
+                irony:${fullLink.irony},<br>`;
                 container.appendChild(ui);
                 const result = document.querySelector('#results');
                 result.appendChild(container);
@@ -35,9 +34,16 @@ function handleSubmit(event) {
                 console.log('error', error);
             }
         };
-        const theLink = `${baseUrl}64b6a577f1639c23190b2cdb643bb70f&url=${formText}&lang=en`;
-        console.log(theLink);
-        formData(theLink);
+
+        fetch('/api_key')
+            .then(res => res.json())
+            .then(function (res) {
+                const theLink = `${baseUrl}${res.application_key}&url=${formText}&lang=en`;
+                console.log(theLink);
+                formData(theLink);
+            });
+
+
     }
 
     else if (formText !== '') {
