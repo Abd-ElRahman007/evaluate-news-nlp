@@ -17,7 +17,6 @@ function handleSubmit(event) {
                     const text = fullLink.sentence_list[i];
                     console.log(text);
                     formText = `${formText} ${text}`;
-                    return formText;
                 }
                 const container = document.createDocumentFragment();
                 const ui = document.createElement('div');
