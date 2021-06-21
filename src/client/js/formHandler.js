@@ -7,42 +7,38 @@ function handleSubmit(event) {
     // check what text was put into the form field
     let formText = document.getElementById('name').value;
     if (Client.checkForName(formText)) {
-        const formData = async (text_link) => {
-            const link = await fetch(text_link);
+        const postInfo = async (url, data = {}) => {
+            const res = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'same-origin',
+                body: JSON.stringify(data),
+            });
             try {
-                const fullLink = await link.json();
-                console.log(fullLink);
-                let formText = '';
-                for (const i of fullLink.sentence_list) {
-                    const text = fullLink.sentence_list[i];
-                    console.log(text);
-                    formText = `${formText} ${text}`;
-                }
-                const container = document.createDocumentFragment();
-                const ui = document.createElement('div');
-                ui.innerHTML = `agreement:${fullLink.agreement},<br>
-                model:${fullLink.model},<br>
-                confidence:${fullLink.confidence},<br>
-                irony:${fullLink.irony},<br>`;
-                container.appendChild(ui);
-                const result = document.querySelector('#results');
-                result.appendChild(container);
-                console.log(container.firstChild);
-                return fullLink;
+                const newInfo = await res.json();
+                return newInfo;
             } catch (error) {
-                console.log('error', error);
+                console.log(error);
             }
         };
-
-        fetch('/api_key')
-            .then(res => res.json())
-            .then(function (res) {
-                const theLink = `${baseUrl}${res.application_key}&url=${formText}&lang=en`;
-                console.log(theLink);
-                formData(theLink);
+        postInfo('/theUrl', { url: formText, apiUrl: baseUrl })
+            .then(() => {
+                fetch('/nlpData')
+                    .then(res => res.json())
+                    .then(res => {
+                        const container = document.createDocumentFragment();
+                        const ui = document.createElement('div');
+                        ui.innerHTML = `agreement:${res.agreement},<br>
+                model:${res.model},<br>
+                confidence:${res.confidence},<br>
+                irony:${res.irony},<br>
+                text:${res.articleText}`;
+                        container.appendChild(ui);
+                        const result = document.querySelector('#results');
+                        result.appendChild(container);
+                        console.log(container.firstChild);
+                    });
             });
-
-
     }
 
     else if (formText !== '') {
