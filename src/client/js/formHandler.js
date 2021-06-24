@@ -1,9 +1,6 @@
 const baseUrl = 'https://api.meaningcloud.com/sentiment-2.1?key=';
-
-function handleSubmit(event) {
+async function handleSubmit(event) {
     event.preventDefault();
-
-
     // check what text was put into the form field
     let formText = document.getElementById('name').value;
     if (Client.checkForName(formText)) {
@@ -21,28 +18,19 @@ function handleSubmit(event) {
                 console.log(error);
             }
         };
-        postInfo('/theUrl', { url: formText, apiUrl: baseUrl })
-            .then(() => {
-                fetch('/nlpData')
-                    .then(res => res.json())
-                    .then(res => {
-                        const container = document.createDocumentFragment();
-                        const ui = document.createElement('div');
-                        ui.innerHTML = `agreement:${res.agreement},<br>
-                model:${res.model},<br>
-                confidence:${res.confidence},<br>
-                irony:${res.irony},<br>
-                text:${res.articleText}`;
-                        container.appendChild(ui);
-                        const result = document.querySelector('#results');
-                        result.appendChild(container);
-                        console.log(container.firstChild);
-                    });
-            });
+        const data = await postInfo('http://localhost:8000/theUrl', { url: formText, apiUrl: baseUrl });
+        const container = document.createDocumentFragment();
+        const ui = document.createElement('div');
+        ui.innerHTML = `agreement:${data.agreement},<br>
+                model:${data.model},<br>
+                confidence:${data.confidence},<br>
+                irony:${data.irony}`;
+        container.appendChild(ui);
+        const result = document.querySelector('#results');
+        result.appendChild(container);
+        console.log(container.firstChild);
     }
-
     else if (formText !== '') {
-
         alert('the link is invalid, please check the syntax and try again. ');
         document.getElementById('results').innerHTML = '';
     }
@@ -50,8 +38,5 @@ function handleSubmit(event) {
         alert('the input is empty');
         document.getElementById('results').innerHTML = '';
     }
-
 }
-
 export { handleSubmit };
-
